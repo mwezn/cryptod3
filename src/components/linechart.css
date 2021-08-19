@@ -1,0 +1,13 @@
+h1.coinpair {
+    position:relative;
+    font-size:100px;
+    color: #ffe5aa;
+
+}
+
+.textBox{
+    width:100px;
+    height:300px;
+    border-radius:30px;
+    background-color: rgb(127,255,124,0.6);
+}

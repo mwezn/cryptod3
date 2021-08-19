@@ -1,0 +1,13 @@
+.coin{
+    display: flex;
+    align-items: left;
+    border:2px solid black;
+
+
+}
+.duration{
+    display:flex;
+    align-items: right;
+    border: 2px solid grey;
+
+}
