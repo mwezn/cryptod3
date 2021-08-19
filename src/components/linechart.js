@@ -60,10 +60,21 @@ async sendServer(event){
   
 }
 
+
 shift =(arr)=> {
     let width=1500;
     let height=900;
     let padding=80;
+    let mystyle = {
+      color: "white",
+      backgroundColor: "black",
+      padding: "10px",
+      opacity:1,
+      fontFamily: "Arial",
+      width:"100px",
+      height:"300px",
+      //border-radius:"30px"
+    }
     d3.select("svg").remove();
     const svg = d3.select("#my_dataviz")
               .append("svg")
@@ -129,7 +140,7 @@ shift =(arr)=> {
       .style('opacity',0)
       .attr("text-anchor", "left")
       .attr("alignment-baseline", "middle")
-      .attr("class", "textBox")
+      
   var area = d3.area()
                 
         .x( function(d) { return x(d[0])} )
@@ -144,7 +155,8 @@ shift =(arr)=> {
      .on("pointerover",function(){
        a.style("opacity",1)
        focus.style("opacity",1)
-       focusTxt.style("opacity",1)
+       //focusTxt.style("opacity",1)
+       focusTxt.attr("class", `${mystyle}`)
        //h1.style("opacity",1)
        l.style("opacity",1)
      })
@@ -162,7 +174,7 @@ shift =(arr)=> {
        l.attr("y2",y(d3.min(arr,(d)=>d[1])));
        focus.attr("cx",x(arr[i][0]))
        focus.attr("cy",y(arr[i][1]))
-       focusTxt.html(`x: ${xlabel} <br> y: ${arr[i][1]}`)
+       focusTxt.html(`x: ${xlabel} <br></br> y: ${arr[i][1]}`)
        focusTxt.attr('x',x(arr[i][0])+10)
        focusTxt.attr('y',y(arr[i][1]))
        a.attr("d", area(currentData))
@@ -204,7 +216,8 @@ shift =(arr)=> {
    
 }  
 render(){
-  let coin=this.state.coinpair?this.state.coinpair:"Loading";
+  let coin=this.state.coinpair?this.state.coinpair.slice(0,3)+"/"+this.state.coinpair.slice(3,7):"Loading";
+  
     return (
     <div>
       <div><h1 className="coinpair">{coin} Price</h1></div>
