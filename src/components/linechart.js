@@ -12,6 +12,9 @@ class LineChart extends Component {
       coinpair:null
     }
   }
+  async componentWillMount(){
+    this.setState({coinpair:"Loading data"})
+  }
    async componentDidMount() {
     let obj={}
         const requestOptions = {
@@ -31,9 +34,7 @@ class LineChart extends Component {
 
 async sendServer(event){
   event.preventDefault();
-  const formData = new FormData(document.querySelector('form'))
-  let symb="";
-  let int="";
+  const formData = new FormData(document.querySelector('form'));
   let obj={}
   console.log(formData)
   for (var pair of formData.entries()) {
@@ -65,16 +66,8 @@ shift =(arr)=> {
     let width=1500;
     let height=900;
     let padding=80;
-    let mystyle = {
-      color: "white",
-      backgroundColor: "black",
-      padding: "10px",
-      opacity:1,
-      fontFamily: "Arial",
-      width:"100px",
-      height:"300px",
-      //border-radius:"30px"
-    }
+
+
     d3.select("svg").remove();
     const svg = d3.select("#my_dataviz")
               .append("svg")
@@ -110,14 +103,7 @@ shift =(arr)=> {
       // This allows to find the closest X index of the mouse:
       var bisect = d3.bisector(function(d) { return d[0]; }).left;
     
-      // Create the circle that travels along the curve of chart
-      var focus = svg
-        .append('g')
-        .append('circle')
-          .style("fill", "none")
-          .attr("stroke", "black")
-          .attr('r', 8.5)
-          .style("opacity", 0)
+      
       var l=svg
         .append('g')
         .append('line')
@@ -134,13 +120,28 @@ shift =(arr)=> {
           .x(function(d) { return x(d[0]) })
           .y(function(d) { return y(d[1]) })
           )
+      // Create the circle that travels along the curve of chart
+      var focus = svg
+        .append('g')
+        .append('circle')
+          .style("fill", "none")
+          .attr("stroke", "black")
+          .attr('r', 8.5)
+          .style("opacity", 0)
   var focusTxt = svg
     .append('g')
     .append('text')
       .style('opacity',0)
       .attr("text-anchor", "left")
       .attr("alignment-baseline", "middle")
-      
+      .attr("class", "textBox")
+    var tooltip =svg
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden")
+      .style("background", "#000")
+      .text("a simple tooltip");
   var area = d3.area()
                 
         .x( function(d) { return x(d[0])} )
@@ -155,10 +156,9 @@ shift =(arr)=> {
      .on("pointerover",function(){
        a.style("opacity",1)
        focus.style("opacity",1)
-       //focusTxt.style("opacity",1)
-       focusTxt.attr("class", `${mystyle}`)
-       //h1.style("opacity",1)
        l.style("opacity",1)
+       focusTxt.style("opacity",1)
+       
      })
      .on("mousemove",function(e){
        //var x0 = x.invert(d3.pointer(this)[0]) ///d3.mouse() not supported in V6;
@@ -177,13 +177,13 @@ shift =(arr)=> {
        focusTxt.html(`x: ${xlabel} <br></br> y: ${arr[i][1]}`)
        focusTxt.attr('x',x(arr[i][0])+10)
        focusTxt.attr('y',y(arr[i][1]))
+
        a.attr("d", area(currentData))
      })
      .on("mouseleave",function(){
        a.style("opacity",0)
        focus.style("opacity",0)
        focusTxt.style("opacity",0)
-       //h1.style("opacity",0)
      })
     
       
