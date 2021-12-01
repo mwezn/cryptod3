@@ -62,6 +62,17 @@ async sendServer(event){
 }
 
 
+maxArray=(arr)=>{
+  let max=-Infinity;
+  let n=arr.length
+  for (let i=0;i<n;i++){
+    let t= Number(arr[i][1])
+    if(t>max) max=t
+  }
+  return max
+}
+
+
 shift =(arr)=> {
     let width=1000;
     let height=500;
@@ -73,13 +84,14 @@ shift =(arr)=> {
               //.attr("width",width)
               //.attr("height", height);
               .attr("preserveAspectRatio", "xMinYMin meet")
-              .attr("viewBox", "0 0 1000 900")
-              .classed("svg-content", true)
+              .attr("viewBox", "0 0 1000 9000")
+              //.classed("svg-content", true)
 
 
   const mindate= new Date(d3.min(arr,(d)=>d[0]))
   
   const maxdate= new Date(d3.max(arr,(d)=>d[0])); 
+
   const Xscale=d3.scaleTime() 
       .domain([mindate,maxdate])
       .range([0+padding,width-padding]);
@@ -93,14 +105,18 @@ shift =(arr)=> {
   const Yscale2=d3.scaleLinear()
       .domain([d3.min(arr, (d)=>d[1]),d3.max(arr,(d)=>d[1])])
       .range([height-padding,0+padding]);
+
+  
   
 
   var x = d3.scaleLinear()
         .domain([d3.min(arr,(d)=> d[0]),d3.max(arr,(d)=>d[0])])
         .range([ 0+padding, width-padding ]);
   var y = d3.scaleLinear()
-        .domain([d3.min(arr,(d)=>d[1]),d3.max(arr,(d)=>d[1])])
+        //.domain([d3.min(arr,(d)=>d[1]),d3.max(arr,(d)=>d[1])])
+        .domain([d3.min(arr,(d)=>d[1]),this.maxArray(arr)])
         .range([height-padding,0+padding]);
+      console.log(x,y,d3.max(arr,(d)=>d[1]),this.maxArray(arr))
    
       // This allows to find the closest X index of the mouse:
       var bisect = d3.bisector(function(d) { return d[0]; }).left;
@@ -131,19 +147,13 @@ shift =(arr)=> {
           .attr('r', 8.5)
           .style("opacity", 0)
   var focusTxt = svg
-    //.append('g')
-    .append('text')
+    .append('g')
+     .append('text')
       .style('opacity',0)
       .attr("text-anchor", "left")
       .attr("alignment-baseline", "middle")
-      //.attr("class", "focusText")               
-  
+      .attr("class", "tooltip")               
 
-  var area = d3.area()
-                
-        .x( function(d) { return x(d[0])} )
-        .y( function(d) { return y(d3.min(arr,(d)=>d[1])) } )
-        .y1( function(d) { return y(d[1]) } );
   var a= svg.append('path')
       .attr('stroke', 'black')
       .attr('fill', '#69b3a2'); //#69b3a2
@@ -165,7 +175,7 @@ shift =(arr)=> {
        var z=d3.pointer(e,this)
        var x1=x.invert(z[0])
        var i=bisect(arr,x1,1)
-       console.log(z,x1,i)
+       //console.log(z,x1,i)
        let xlabel= arr[i]?new Date(arr[i][0]).toString().slice(0,24):null;
        h1.style("font-family",'arial')
        l.attr("x1",arr[i]?x(arr[i][0]):null)
@@ -174,12 +184,9 @@ shift =(arr)=> {
        l.attr("y2",arr[i]?y(d3.min(arr,(d)=>d[1])):null);
        focus.attr("cx",()=>arr[i]?x(arr[i][0]):null)
        focus.attr("cy",()=>arr[i]?y(arr[i][1]):null)
-       focusTxt.text(arr[i]?`x: ${xlabel} y: ${arr[i][1]}`:null)
+       focusTxt.html(arr[i]?`x: ${xlabel} y: ${arr[i][1]}`:null)
        focusTxt.attr('x',arr[i]?x(arr[i][0])+10:null)
        focusTxt.attr('y',arr[i]?y(arr[i][1]):null)
-
-      
-       //a.attr("d", area(currentData))
      })
      .on("mouseleave",function(){
        a.style("opacity",0)

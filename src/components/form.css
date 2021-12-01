@@ -1,6 +1,6 @@
 .coin{
     width:50%;
-    display: flex;
+    display: inline;
     align-items: left;
     border:2px solid black;
     box-shadow: 2px 5px red;

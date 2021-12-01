@@ -9,7 +9,7 @@ function Form (props){
     <div className="coin">
     <h3>Choose coin pair :</h3> <br></br>
     <label>ETH/USDT</label>
-    <input type="radio" name="sym" value="ETHUSDT"></input>
+    <input type="radio" name="sym" value="ETHUSDT"></input><br></br>
     <label>BTC/USDT</label>
     <input type="radio" name="sym" value="BTCUSDT"></input><br></br>
     <label>HNT/USDT</label>
