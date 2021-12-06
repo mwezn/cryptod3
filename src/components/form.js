@@ -1,5 +1,10 @@
 import React from 'react';
 import './form.css'
+import shib  from '../imgs/shibu.jpeg'
+import eth from '../imgs/eth.png'
+import btc from '../imgs/btc.png'
+import hnt from '../imgs/hnt.png'
+import xrp from '../imgs/xrp.png'
 
 function Form (props){
 
@@ -8,16 +13,21 @@ function Form (props){
     <form onSubmit={(e)=>props.onSubmit(e)}>
     <div className="coin">
     <h3>Choose coin pair :</h3> <br></br>
-    <label>ETH/USDT</label>
+    <label><img src={eth}></img>ETH/USDT</label>
     <input type="radio" name="sym" value="ETHUSDT"></input><br></br>
-    <label>BTC/USDT</label>
+    <label><img src={btc}></img>BTC/USDT</label>
     <input type="radio" name="sym" value="BTCUSDT"></input><br></br>
-    <label>HNT/USDT</label>
+    <label><img src={hnt}></img>HNT/USDT</label>
     <input type="radio" name="sym" value="HNTUSDT"></input><br></br>
-    <label>XRP/USDT</label>
+    <label><img src={xrp}></img>XRP/USDT</label>
     <input type="radio" name="sym" value="XRPUSDT"></input><br></br>
-    <label>SHIB/USDT</label>
+    <label><img src={shib}></img>SHIB/USDT</label>
     <input type="radio" name="sym" value="SHIBUSDT"></input><br></br>
+    </div>
+    <div className="coin">
+    <h3>Choose coin pair :</h3> <br></br>
+    <label><img src={eth}></img>ETH/GBP</label>
+    <input type="radio" name="sym" value="ETHGBP"></input><br></br>
     </div>
     <div className="duration">
     <h3>Choose time interval :</h3>

@@ -1,6 +1,6 @@
 .coin{
     width:50%;
-    display: inline;
+    display: inline-block;
     align-items: left;
     border:2px solid black;
     box-shadow: 2px 5px red;
@@ -14,11 +14,10 @@
 .svg-content{
     display: inline-block;
     position: absolute;
-    top: 1000;
+    top: 10;
     left: 0;
 } 
-.focusText {
-    border: 10px solid green;
-    display: inline-block;
-    width: 100%;
+img {
+    display: inline;
+    width:15px;
 }
