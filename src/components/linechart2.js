@@ -153,16 +153,8 @@ shift =(arr)=> {
   .attr("class", "tooltip")
   .attr("x", 300)
   .attr("y", 100)
-  .attr("width", 100)
-  .attr("height", 100)
-    /*var div = d3.select("body").append("div")
-      .attr('pointer-events', 'none')
-      .attr("class", "tooltip")
-      .style("opacity", 1)
-      .html("FIRST LINE <br> SECOND LINE")*/
-    
-
-
+  //.attr("width", 100)
+  //.attr("height", 100)
                
 
   var a= svg.append('path')
@@ -192,7 +184,7 @@ shift =(arr)=> {
        focus.attr("cx",()=>arr[i]?x(arr[i][0]):null)
        focus.attr("cy",()=>arr[i]?y(arr[i][1]):null)
        //focusTxt1.html(arr[i]?`x: ${xlabel} <br> y: ${arr[i][1]}`:null)
-       focusTxt1.html(arr[i]?'<div style="border:1px solid">' + 'x:'+ xlabel + '</br>' + 'y: $'+Number(arr[i][1]).toFixed(3) + '</div>':null)
+       focusTxt1.html(arr[i]?'<div class="tooltip">' + 'x:'+ xlabel + '</br>' + 'y: $'+Number(arr[i][1]).toFixed(3) + '</div>':null)
       
 
       
