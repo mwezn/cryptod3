@@ -184,7 +184,7 @@ shift =(arr)=> {
        focus.attr("cx",()=>arr[i]?x(arr[i][0]):null)
        focus.attr("cy",()=>arr[i]?y(arr[i][1]):null)
        //focusTxt1.html(arr[i]?`x: ${xlabel} <br> y: ${arr[i][1]}`:null)
-       focusTxt1.html(arr[i]?'<div class="tooltip">' + 'x:'+ xlabel + '</br>' + 'y: $'+Number(arr[i][1]).toFixed(3) + '</div>':null)
+       focusTxt1.html(arr[i]?'<div class="tooltip">' + 'x:'+ xlabel + '</br>' + 'y: $'+Number(arr[i][1]).toFixed(30) + '</div>':null)
       
 
       

@@ -43,7 +43,7 @@ router.post('/priceHist', async (req, res) => {
 })
 
 router.post('/history', async (req, res) => {
-
+  //api format: https://api.binance.com/api/v1/klines?symbol=ETHUSDT&interval=1h
   let query = req.body;
   console.log(req.body);
   let URL2 = 'https://api.binance.com/api/v1/klines'
