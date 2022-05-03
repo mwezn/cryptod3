@@ -52,6 +52,7 @@ router.post('/history', async (req, res) => {
   URL2 += '?symbol=' + symb + '&interval=' + interval
   let URL3 = `https://api.binance.com/api/v1/klines?symbol=${symb}&interval=${interval}`
   let data = await get(URL3);
+  console.log(data)
   return res.json([data, symb, interval])
 
 })
