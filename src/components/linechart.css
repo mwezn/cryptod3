@@ -1,7 +1,16 @@
+div.title {
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
+
+
 h1.coinpair {
     position:relative;
-    font-size:70px;
+    font-size:calc(16px -7vw);
+    width:50%;
     color: #1fcea2;
+
 
 }
 
@@ -13,4 +22,8 @@ h1.coinpair {
     border-radius:10px;
     background-color: rgb(127,255,124,0.6);
     opacity:1;
+}
+#my_dataviz{
+    border:1px solid black;
+    width:100%;
 }
