@@ -9,7 +9,8 @@ class Chart extends Component {
     super(props);
     this.state={
       data:null,
-      coinpair:'ETHUSDT'
+      coinpair:'ETHUSDT',
+      interval:'1h'
     }
   }
    async componentDidMount() {
@@ -18,7 +19,7 @@ class Chart extends Component {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         };
-          const res= await fetch(`/api/v1/klines?symbol=${this.state.coinpair}&interval=1h`,requestOptions)
+          const res= await fetch(`/api/v1/klines?symbol=${this.state.coinpair}&interval=${this.state.interval}`,requestOptions)
           const data=await res.json();
           this.setState({data:data})
           console.log(data)
@@ -27,7 +28,7 @@ class Chart extends Component {
           this.shift(nested);
     }
 
-    async getCoin(coin,time){
+    async getCoin(coin){
       
       this.setState(()=>{
         return {coinpair: coin,data:null} 
@@ -36,8 +37,8 @@ class Chart extends Component {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     };
-      let interval = time? time : '1h'
-      const res= await fetch(`/api/v1/klines?symbol=${coin}&interval=${interval}`,requestOptions)
+      
+      const res= await fetch(`/api/v1/klines?symbol=${coin}&interval=${this.state.interval}`,requestOptions)
       const data=await res.json();
       this.setState({data:data})
       console.log(data)
@@ -45,6 +46,28 @@ class Chart extends Component {
       console.log(nested)
       this.shift(nested);
     }
+
+    async getRange(time){
+      
+      this.setState(()=>{
+        return {interval:time,data:null} 
+      })
+      console.log(this.state)
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+      
+      const res= await fetch(`/api/v1/klines?symbol=${this.state.coinpair}&interval=${time}`,requestOptions)
+      const data=await res.json();
+      this.setState({data:data})
+      console.log(data)
+      let nested=this.state.data
+      console.log(nested)
+      this.shift(nested);
+    }
+
+
 
 
 shift =(arr)=> {
@@ -194,7 +217,8 @@ render(){
     return (
     <div>
       <div className="title"><h1 className="coinpair">{d} Price</h1></div>
-      <DropDown onChange={(e)=>this.getCoin(e)}/>
+      <h2>{this.state.interval}</h2>
+      <DropDown onChange={(e)=>this.getCoin(e)} timeChange={(e)=> this.getRange(e)}/>
       <div id="my_dataviz"></div> 
 
     </div>)
