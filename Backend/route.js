@@ -24,7 +24,7 @@ let URL = `https://api1.binance.com/api/v3/ticker/24hr`
 
 
 router.get('/', (req, res) => {
-  res.sendFile(__dirname + '../public/index.html');
+  res.sendFile(__dirname + '../../public/index.html');
 })
 
 router.post('/coins', async (req, res) => {

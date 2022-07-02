@@ -81,23 +81,25 @@ shift =(arr)=> {
       .select("#my_dataviz")
       .append("svg")
       .attr("viewBox", `0 0 900 600`)
-
-
-  const mindate= new Date(d3.min(arr,(d)=>d[0]))
+    
+    const mindate= new Date(d3.min(arr,(d)=>d[0]))
   
-  const maxdate= new Date(d3.max(arr,(d)=>d[0])); 
+    const maxdate= new Date(d3.max(arr,(d)=>d[0])); 
+    
+
+
   const Xscale=d3.scaleTime() 
       .domain([mindate,maxdate])
       .range([0+padding,width-padding]);
   const Yscale=d3.scaleLinear()
-      .domain([d3.min(arr,(d)=>d[1]),d3.max(arr,(d)=>d[1])])
+      .domain([d3.min(arr,(d)=>Number(d[1])),d3.max(arr,(d)=>Number(d[1]))])
       .range([height-padding,0+padding]);
   
   const Xscale2=d3.scaleTime() //Change this back??
       .domain([mindate, maxdate])
       .range([0+padding,width-padding]);
   const Yscale2=d3.scaleLinear()
-      .domain([d3.min(arr, (d)=>d[1]),d3.max(arr,(d)=>d[1])])
+      .domain([d3.min(arr, (d)=>Number(d[1])),d3.max(arr, d=> Number(d[1]))])
       .range([height-padding,0+padding]);
   
 
@@ -105,7 +107,8 @@ shift =(arr)=> {
         .domain([d3.min(arr,(d)=> d[0]),d3.max(arr,(d)=>d[0])])
         .range([ 0+padding, width-padding ]);
   var y = d3.scaleLinear()
-        .domain([d3.min(arr,(d)=>d[1]),d3.max(arr,(d)=>d[1])])
+        //.domain([d3.min(arr,(d)=>d[1]),d3.max(arr,(d)=>d[1])])
+        .domain([d3.min(arr,(d)=>Number(d[1])),d3.max(arr, d=> Number(d[1]))])
         .range([height-padding,0+padding]);
    
       // This allows to find the closest X index of the mouse:
@@ -136,13 +139,13 @@ shift =(arr)=> {
           .attr("stroke", "black")
           .attr('r', 8.5)
           .style("opacity", 0)
-  var focusTxt = svg
-    .append('g')
-    .append('text')
-      .style('opacity',0)
-      .attr("text-anchor", "left")
-      .attr("alignment-baseline", "middle")
-      .attr("class", "textBox")
+      var focusTxt1 = svg
+          .append("foreignObject")
+          .attr("class", "tooltip")
+          .attr("x", 300)
+          .attr("y", 100)
+          //.attr("width", 100)
+          //.attr("height", 100)
   
   var a= svg.append('path')
       .attr('stroke', 'black')
@@ -154,7 +157,7 @@ shift =(arr)=> {
        a.style("opacity",1)
        focus.style("opacity",1)
        l.style("opacity",1)
-       focusTxt.style("opacity",1)
+       focusTxt1.style("opacity",1)
        
      })
      .on("mousemove",function(e){
@@ -170,16 +173,15 @@ shift =(arr)=> {
        l.attr("y2",y(d3.min(arr,(d)=>d[1])));
        focus.attr("cx",x(arr[i][0]))
        focus.attr("cy",y(arr[i][1]))
-       focusTxt.html(`x: ${xlabel} <br></br> y: ${arr[i][1]}`)
-       focusTxt.attr('x',x(arr[i][0])+10)
-       focusTxt.attr('y',y(arr[i][1]))
+       focusTxt1.html(arr[i]?'<div class="tooltip">' + 'x:'+ xlabel + '</br>' + 'y: $'+Number(arr[i][1]).toFixed(30) + '</div>':null)
+      
 
        
      })
      .on("mouseleave",function(){
        a.style("opacity",0)
        focus.style("opacity",0)
-       focusTxt.style("opacity",0)
+       focusTxt1.style("opacity",0)
      })
     
       
