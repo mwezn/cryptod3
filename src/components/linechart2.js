@@ -1,7 +1,7 @@
+//This is identical to frontfetch.js except this file is designed for the route in Backend
 import React, {Component} from 'react';
 import * as d3 from "d3";
 import './linechart.css';
-
 import Form from './form'
 
 
