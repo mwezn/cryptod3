@@ -173,8 +173,7 @@ shift =(arr)=> {
        l.attr("y2",y(d3.min(arr,(d)=>d[1])));
        focus.attr("cx",x(arr[i][0]))
        focus.attr("cy",y(arr[i][1]))
-       focusTxt1.html(arr[i]?'<div class="tooltip">' + 'x:'+ xlabel + '</br>' + 'y: $'+Number(arr[i][1]).toFixed(30) + '</div>':null)
-      
+       focusTxt1.html(arr[i]?`<div class="tooltip">x: ${xlabel} </br> y: $${Number(arr[i][1]).toFixed(30)} </div>`:null)
 
        
      })

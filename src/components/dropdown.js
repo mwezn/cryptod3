@@ -1,9 +1,5 @@
 import React from 'react';
-import shib  from '../imgs/shibu.jpeg'
-import eth from '../imgs/eth.png'
-import btc from '../imgs/btc.png'
-import hnt from '../imgs/hnt.png'
-import xrp from '../imgs/xrp.png'
+
 
 function DropDown (props){
     const choosePair=()=>{
@@ -18,6 +14,7 @@ function DropDown (props){
         <div>
             <label for="coin">Choose coin:</label>
             <select id="coin" onChange={e=>props.onChange(choosePair())}>
+                
                 <option value='BTCUSDT'>BTC</option>
                 <option value='ETHUSDT' selected>ETH</option>
                 <option value='HNTUSDT'>HNT</option>
