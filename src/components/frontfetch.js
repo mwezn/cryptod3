@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import * as d3 from "d3";
 import './linechart.css';
 import DropDown from './dropdown';
+import btc from '../imgs/btc.png';
+import eth from '../imgs/eth.png';
+import hnt from '../imgs/hnt.png';
+import shibu from '../imgs/shibu.jpeg';
+import xrp from '../imgs/xrp.png';
 
 
 class Chart extends Component {
@@ -27,6 +32,7 @@ class Chart extends Component {
           console.log(nested)
           this.shift(nested);
     }
+
 
     async getCoin(coin){
       
@@ -65,6 +71,11 @@ class Chart extends Component {
       let nested=this.state.data
       console.log(nested)
       this.shift(nested);
+    }
+
+    images(coin){
+      let imgObj={"ETHUSDT":eth, "BTCUSDT":btc,"HNTUSDT":hnt, "XRPUSDT":xrp, "SHIBUSDT":shibu}
+      return imgObj[coin]
     }
 
 
@@ -212,12 +223,14 @@ shift =(arr)=> {
      .call(yaxis);
    
 }  
+
 render(){
   let d=this.state.data&&this.state.coinpair?this.state.coinpair.slice(0,3)+"/"+this.state.coinpair.slice(3,7):"Loading";
   
     return (
     <div>
       <div className="title"><h1 className="coinpair">{d} Price</h1></div>
+      <img className="coinlogo" src={this.images(this.state.coinpair)} alt="eth"></img>
       <h2>{this.state.interval}</h2>
       <DropDown onChange={(e)=>this.getCoin(e)} timeChange={(e)=> this.getRange(e)}/>
       <div id="my_dataviz"></div> 
