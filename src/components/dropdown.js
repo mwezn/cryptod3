@@ -28,6 +28,8 @@ function DropDown (props){
                 <option value='30m'>30Min</option>
                 <option value='1h' selected>1Hour</option>
                 <option value='6h'>6Hour</option>
+                <option value='1d'>1Day</option>
+                <option value='1w'>1Week</option>
 
             </select>
         </div>

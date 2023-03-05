@@ -204,10 +204,8 @@ shift =(arr)=> {
     })
     .on("pointermove",function(e){
        var z=d3.pointer(e,this)
-       
        var x1=x.invert(z[0])
        var i=bisect(arr,x1,1)
-
        let xlabel= arr[i]?new Date(arr[i][0]).toString().slice(0,24):null;
        h1.style("font-family",'arial')
        l.attr("x1",x(arr[i][0]))
