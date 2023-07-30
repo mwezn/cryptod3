@@ -20,6 +20,7 @@ function DropDown (props){
                 <option value='HNTUSDT'>HNT</option>
                 <option value="XRPUSDT">XRP</option>
                 <option value='SHIBUSDT'>SHIBU</option>
+                <option value='DOGEGBP'>DOGE</option>
             </select>
             <label for="time">Time range:</label>
             <select id="time" onChange={e=>props.timeChange(chooseTime())}>
