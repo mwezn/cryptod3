@@ -1,7 +1,7 @@
 
 import './App.css';
 import React from 'react'
-//import Chart from './components/frontfetch';
+import Chart from './components/frontfetch';
 import PriceChange from './components/pricechange'
 
 
