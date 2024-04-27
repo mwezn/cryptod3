@@ -2,15 +2,15 @@
 import './App.css';
 import React from 'react'
 import Chart from './components/frontfetch';
-import PriceChange from './components/pricechange'
+import History from './components/history'
 
 
 function App() {
   return (
     <div className="App">
-      <PriceChange></PriceChange>
+      <History></History>
     </div>
   );
 }
 
-export default App;
+export default History;

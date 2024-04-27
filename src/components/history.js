@@ -1,9 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
+import './history.css'
 
 
-function PriceChange(props){
+function History(props){
     const [data,updateData]= useState([])
+    const [typed, updateTyped]= useState([])
+    const [year, updateYear]= useState({year:'2021'})
 
     let CBHistory = [
         
@@ -27,78 +30,25 @@ function PriceChange(props){
 
             {date: '2023/08/27', asset: 'XRPGBP',trade:'buy', coinprice: 0.42, quantity:101.600006, cost:43.01,price_inc_fees: 45.0},
 
-            {date: '2023/10/19', asset: 'SOLGBP',trade:'buy', coinprice: 19.78, quantity:7.293033708, cost:144.24,price_inc_fees: 150.0},
+            {date: '2023/10/19', asset: 'SOLGBP',trade:'buy', coinprice: 19.78, quantity:7.293033708, cost:144.24,price_inc_fees: 150.0, current:null},
 
             {date: '2023/11/06', asset: 'HNTGBP',trade:'buy', coinprice: 1.45, quantity:102.53663957, cost:149.05,price_inc_fees: 155.0},
 
             {date: '2023/11/19', asset: 'AIOZGBP',trade:'buy', coinprice: 0.0398, quantity:1000, cost:39.80,price_inc_fees: 41.79},
+            {date: '2023/12/15', asset: 'SOLGBP',trade:'sell', coinprice: 58.29, quantity:3.5, total:204.02,price_inc_fees: 200.98},
+            {date: '2024/01/01', asset: 'SOLGBP',trade:'sell', coinprice: 81.61, quantity:2.205, total:180.00,price_inc_fees: 177.01},
+
         ]
-
-        console.log(CBHistory.filter(d=>d.trade=='buy'))
-        console.log(CBHistory.filter(d=>d.trade=='buy').map(d=>d.price_inc_fees).reduce((a,b)=>a+b))
-        console.log(CBHistory.filter(d=>d.trade=='sell').map(d=>d.coinprice*d.quantity))
-
-    useEffect(()=>{
-        async function getPriceByDate(){
-            const requestOptions = {
-               method: 'GET'
-           };
-           try {
-               await fetch(`api/v3/ticker/price`,requestOptions)
-                  .then(res=>res.json())
-                  .then(json=> {
-                        updateData(()=> [ ...json])
-                   })
-            
-               console.log(data, !data)
-           } 
-           catch(err) {
-               console.log(err)
-           }
-         }
-        
-        getPriceByDate();
-    },[])
-
+    function changeYear(yr){
+        console.log(year)
+        updateYear(()=>{return {year:  yr}})
+        console.log(yr)
+    }
     
-
     function renderList(arr){
         return arr.map(d=><li>{
-            `Asset:${d.asset} Date:${d.date} Price: ${d.coinprice} Trade ${d.trade} Cost £${d.price_inc_fees}`
+            `Asset:${d.asset} Date:${d.date} Price: ${d.coinprice} Trade ${d.trade} Cost £${d.price_inc_fees} quantity:${d.quantity}`
         }</li>)
-    }
-
-    function renderData(arr){
-        return arr.map(d=><li>{
-            `Asset:${d.symbol} Price: ${d.price}`
-        }</li>)
-
-    }
-
-   
-
-    function changeSymbol(e){
-        console.log(e.target.value)
-        let newdata= data.slice();
-
-        const exists= (d)=>{
-            if(d.symbol.search(`${e.target.value}`)===-1){
-                return false;
-
-            }
-            if(d.symbol.search(`${e.target.value}`)===0){
-                return true
-            }
-        }
-
-
-        updateData((old)=>old.filter(d=>exists(d)))
-
-        //temp=data.filter(d=>exists(d))
-
-        //let result=[...newdata.map(d=>exists(d))]
-        //console.log(result)
-        //console.log(newdata.filter(d=>d.symbol.search(`${e.target.value}`)==0))
     }
     
     return( 
@@ -113,17 +63,35 @@ function PriceChange(props){
             <ul>
                 {renderList(CBHistory.filter(d=>d.trade=='sell'))}
             </ul>
+
+            <div className='tradeyear'>
+            <select id="dropdown" onChange={(e)=>changeYear(document.getElementById('dropdown').value)}>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+            </select>
+            Trades {year.year}: £
+            <ul> {CBHistory.map(d=>{
+                let dt=new Date(d.date)
+                return dt.getFullYear()==year.year?<li>{
+                    `Asset:${d.asset} Date:${d.date} Price: ${d.coinprice} Trade ${d.trade} Cost £${d.price_inc_fees} quantity:${d.quantity}`
+                }</li>:null
+                })}
+            </ul>
+            </div>
+
+
+
             <p> Total bought: £{CBHistory.filter(d=>d.trade=='buy').map(d=>d.price_inc_fees).reduce((a,b)=>a+b)}
             </p>
+            
             <p> Total sold: £{CBHistory.filter(d=>d.trade=='sell').map(d=>d.price_inc_fees).reduce((a,b)=>a+b)}
             </p>
-            <p> Total invested: £{
-            CBHistory.filter(d=>d.trade=='buy').map(d=>d.price_inc_fees).reduce((a,b)=>a+b)-CBHistory.filter(d=>d.trade=='sell').map(d=>d.price_inc_fees).reduce((a,b)=>a+b)
+            <p> Total profit: £{
+            CBHistory.filter(d=>d.trade=='sell').map(d=>d.price_inc_fees).reduce((a,b)=>a+b)-CBHistory.filter(d=>d.trade=='buy').map(d=>d.price_inc_fees).reduce((a,b)=>a+b)
             }</p>
-            <input type="text" placeholder="start typing symbol" onInput={(e)=>changeSymbol(e)}></input>
-            <ul>
-                {data[0]?renderData(data):<li>Fetching ...</li>}
-            </ul>
+            
         </div>
     
     )
@@ -131,4 +99,4 @@ function PriceChange(props){
 
 
 
-export default PriceChange;
+export default History;
