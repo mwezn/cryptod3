@@ -18,7 +18,7 @@ function History(props){
         
             {date: '2022/12/13', asset: 'DOGEGBP',trade:'sell', coinprice: 0.0730, quantity:141.55436326,price_inc_fees: 10.34},
 
-            {date: '2023/04/07', asset: 'DOGEGBP', trade:'buy',coinprice: 0.0668, quantity:141.0, cost:18.4179104473,price_inc_fees: 10.41},
+            {date: '2023/04/07', asset: 'DOGEGBP', trade:'buy',coinprice: 0.0668, quantity:141.0, cost:9.42,price_inc_fees: 10.41},
 
             {date: '2023/08/06', asset: 'HNTGBP', trade:'buy',coinprice: 1.67, quantity:5.40560669, cost:9.01,price_inc_fees: 10},
 
@@ -37,6 +37,11 @@ function History(props){
             {date: '2023/11/19', asset: 'AIOZGBP',trade:'buy', coinprice: 0.0398, quantity:1000, cost:39.80,price_inc_fees: 41.79},
             {date: '2023/12/15', asset: 'SOLGBP',trade:'sell', coinprice: 58.29, quantity:3.5, total:204.02,price_inc_fees: 200.98},
             {date: '2024/01/01', asset: 'SOLGBP',trade:'sell', coinprice: 81.61, quantity:2.205, total:180.00,price_inc_fees: 177.01},
+            {date: '2024/05/21', asset: 'SOLGBP',trade:'sell', coinprice: 139.61, quantity:1.636563446, total:228.48,price_inc_fees: 225.08},
+            {date: '2024/06/24', asset: 'HNTGBP',trade:'sell', coinprice: 2.54, quantity:107.39050819, total:272.42,price_inc_fees: 268.36},
+            {date: '2024/07/03', asset: 'AIOZGBP',trade:'sell', coinprice: 0.41, quantity:550, total:227.02,price_inc_fees: 223.64}
+
+
 
         ]
     function changeYear(yr){
@@ -56,9 +61,9 @@ function History(props){
         <div>
             
             <h1>Coinbase bought trades</h1>
-            <ul>
+            <ol>
                 {renderList(CBHistory.filter(d=>d.trade=='buy'))}
-            </ul>
+            </ol>
             <h1>Coinbase sold trades</h1>
             <ul>
                 {renderList(CBHistory.filter(d=>d.trade=='sell'))}
@@ -71,7 +76,7 @@ function History(props){
                 <option value="2023">2023</option>
                 <option value="2024">2024</option>
             </select>
-            Trades {year.year}: £
+            <p>Trades {year.year}:</p>
             <ul> {CBHistory.map(d=>{
                 let dt=new Date(d.date)
                 return dt.getFullYear()==year.year?<li>{
